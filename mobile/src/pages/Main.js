@@ -14,11 +14,14 @@ import {
 } from 'expo-location';
 import { MaterialIcons } from '@expo/vector-icons';
 import api from '../services/api';
+import { connect, disconnect, subscribeToNewDevs } from '../services/socket';
 
 function Main({ navigation }) {
   const [devs, setDevs] = useState([]);
   const [currentRegion, setCurrentRegion] = useState(null);
   const [techs, setTechs] = useState(null);
+  const [avatarWidth, setAvatarWidth] = useState(54);
+  const [avatarHeight, setAvatarHeight] = useState(54);
 
   useEffect(() => {
     async function loadInitialPosition() {
@@ -43,6 +46,17 @@ function Main({ navigation }) {
     loadInitialPosition();
   }, []);
 
+  useEffect(() => {
+    subscribeToNewDevs(dev => setDevs([...devs, dev]));
+  }, [devs]);
+
+  function setupWebsocket() {
+    disconnect();
+
+    const { latitude, longitude } = currentRegion;
+    connect(latitude, longitude, techs);
+  }
+
   async function loadDevs() {
     const { latitude, longitude } = currentRegion;
 
@@ -55,14 +69,30 @@ function Main({ navigation }) {
     });
 
     setDevs(response.data.devs);
+    setupWebsocket();
   }
 
   function handleRegionChanged(region) {
+    const size = (4 * Math.log(360 / region.longitudeDelta)) / Math.LN2;
+
+    setAvatarHeight(size);
+    setAvatarWidth(size);
+
     setCurrentRegion(region);
   }
 
   if (!currentRegion) {
     return null;
+  }
+
+  function avatarStyle() {
+    return {
+      width: avatarWidth,
+      height: avatarHeight,
+      borderRadius: 4,
+      borderWidth: 4,
+      borderColor: '#FFF'
+    };
   }
 
   return (
@@ -75,13 +105,14 @@ function Main({ navigation }) {
         {devs.map(dev => (
           <Marker
             key={dev._id}
+            geodesic={true}
             coordinate={{
               latitude: dev.location.coordinates[1],
               longitude: dev.location.coordinates[0]
             }}
           >
             <Image
-              style={styles.avatar}
+              style={avatarStyle()}
               source={{
                 uri: dev.avatar_url
               }}
