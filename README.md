@@ -3,7 +3,7 @@
 </h1>
 
 <h4 align="center">
-  🚀 Develoepd during OmniStack Week 10 at RocketSeat
+  🚀 Developed during OmniStack Week 10 at RocketSeat
 </h4>
 <p align="center">
   <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/edbrownc/DevRadar">
@@ -46,4 +46,4 @@ Technologies used in this project:
 ## 💻 Project
 
 DevRadar is a project for finding developers near you based on technologies they work with.
-Develoepd during OmniStack Week 10 at <a href="https://rocketseat.com.br/">Rocketseat</a>!
+Developed during OmniStack Week 10 at <a href="https://rocketseat.com.br/">Rocketseat</a>!
