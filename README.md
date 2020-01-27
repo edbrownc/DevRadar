@@ -47,11 +47,3 @@ Technologies used in this project:
 
 DevRadar is a project for finding developers near you based on technologies they work with.
 Develoepd during OmniStack Week 10 at <a href="https://rocketseat.com.br/">Rocketseat</a>!
-
-## :memo: License
-
-This proejct is under a MIT license. More details inside the LICENSE.md file.
-
----
-
-Feito com ♥ by Rocketseat :wave: [Entre na nossa comunidade!](https://discordapp.com/invite/gCRAFhc)
